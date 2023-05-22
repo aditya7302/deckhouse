@@ -30,7 +30,7 @@ variable "keypair_ssh_name" {
 }
 
 variable "floating_ip_network" {
-  type = string
+  type    = string
   default = ""
 }
 
@@ -39,7 +39,7 @@ variable "network_port_ids" {
 }
 
 variable "config_drive" {
-  type = bool
+  type    = bool
   default = false
 }
 

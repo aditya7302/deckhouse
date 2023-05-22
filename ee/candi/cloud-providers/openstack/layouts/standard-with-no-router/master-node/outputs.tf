@@ -6,7 +6,7 @@ output "master_ip_address_for_ssh" {
 }
 
 output "node_internal_ip_address" {
-  value = module.master.node_internal_ip_address
+  value = module.master.node_networks[1].fixed_ip_v4
 }
 
 output "kubernetes_data_device_path" {

@@ -47,7 +47,7 @@ resource "openstack_networking_port_v2" "port" {
   }
 }
 
-resource "openstack_blockstorage_volume_v2" "volume" {
+resource "openstack_blockstorage_volume_v3" "volume" {
   count             = local.root_disk_size == "" ? 0 : 1
   name              = join("-", [local.prefix, var.nodeGroupName, var.nodeIndex])
   size              = local.root_disk_size
@@ -55,6 +55,7 @@ resource "openstack_blockstorage_volume_v2" "volume" {
   metadata          = local.metadata_tags
   volume_type       = local.volume_type
   availability_zone = module.volume_zone.zone
+  enable_online_resize = true
   lifecycle {
     ignore_changes = [
       metadata,
@@ -81,7 +82,7 @@ resource "openstack_compute_instance_v2" "node" {
   }
 
   dynamic "block_device" {
-    for_each = local.root_disk_size == "" ? [] : list(openstack_blockstorage_volume_v2.volume[0])
+    for_each = local.root_disk_size == "" ? [] : list(openstack_blockstorage_volume_v3.volume[0])
     content {
       uuid                  = block_device.value["id"]
       boot_index            = 0

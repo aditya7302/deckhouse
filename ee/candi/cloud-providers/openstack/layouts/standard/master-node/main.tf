@@ -9,6 +9,7 @@ locals {
   volume_type          = local.volume_type_map[local.zone]
   flavor_name          = var.providerClusterConfiguration.masterNodeGroup.instanceClass.flavorName
   root_disk_size       = lookup(var.providerClusterConfiguration.masterNodeGroup.instanceClass, "rootDiskSize", "")
+  etcd_volume_size     = var.providerClusterConfiguration.masterNodeGroup.instanceClass.etcdDiskSizeGb
   additional_tags      = lookup(var.providerClusterConfiguration.masterNodeGroup.instanceClass, "additionalTags", {})
 }
 
@@ -39,7 +40,7 @@ module "master" {
   tags                = local.tags
   zone                = local.zone
   volume_type         = local.volume_type
-  volume_zone = module.volume_zone.zone
+  volume_zone         = module.volume_zone.zone
 }
 
 module "kubernetes_data" {
@@ -47,6 +48,7 @@ module "kubernetes_data" {
   prefix      = local.prefix
   node_index  = var.nodeIndex
   master_id   = module.master.id
+  volume_size = local.etcd_volume_size
   volume_type = local.volume_type
   volume_zone = module.volume_zone.zone
   tags        = local.tags
