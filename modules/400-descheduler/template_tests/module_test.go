@@ -84,6 +84,7 @@ internal:
             enabled: true
           removePodsViolatingTopologySpreadConstraint:
             enabled: true
+  replicas: 1
 `
 			f.ValuesSetFromYaml("global", globalValues)
 			f.ValuesSetFromYaml("descheduler", moduleValues)

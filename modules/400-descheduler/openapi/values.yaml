@@ -11,3 +11,8 @@ properties:
         default: [ ]
         items:
           additionalProperties: true
+      replicas:
+        type: integer
+        default: 1
+        minimum: 0
+        maximum: 1
