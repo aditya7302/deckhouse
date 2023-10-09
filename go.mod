@@ -220,5 +220,4 @@ replace github.com/deckhouse/deckhouse/go_lib/cloud-data => ./go_lib/cloud-data
 
 // Remove 'in body' from errors, fix for Go 1.16 (https://github.com/go-openapi/validate/pull/138).
 replace github.com/go-openapi/validate => github.com/flant/go-openapi-validate v0.19.12-flant.0
-
 replace github.com/flant/addon-operator => github.com/flant/addon-operator v0.0.0-20231007200928-047dad85e1c6
