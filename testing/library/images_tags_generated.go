@@ -138,6 +138,7 @@ var DefaultImagesDigests = map[string]interface{}{
 		"kubeRbacProxy":             "imageHash-common-kubeRbacProxy",
 		"nginxStatic":               "imageHash-common-nginxStatic",
 		"pause":                     "imageHash-common-pause",
+		"redisStatic":               "imageHash-common-redisStatic",
 		"shellOperator":             "imageHash-common-shellOperator",
 	},
 	"containerizedDataImporter": map[string]interface{}{
@@ -184,7 +185,6 @@ var DefaultImagesDigests = map[string]interface{}{
 	"delivery": map[string]interface{}{
 		"argocd":               "imageHash-delivery-argocd",
 		"argocdImageUpdater":   "imageHash-delivery-argocdImageUpdater",
-		"redis":                "imageHash-delivery-redis",
 		"werfArgocdCmpSidecar": "imageHash-delivery-werfArgocdCmpSidecar",
 	},
 	"descheduler": map[string]interface{}{
@@ -392,12 +392,11 @@ var DefaultImagesDigests = map[string]interface{}{
 		"webui":     "imageHash-upmeter-webui",
 	},
 	"userAuthn": map[string]interface{}{
-		"crowdBasicAuthProxy":   "imageHash-userAuthn-crowdBasicAuthProxy",
-		"dex":                   "imageHash-userAuthn-dex",
-		"dexAuthenticator":      "imageHash-userAuthn-dexAuthenticator",
-		"dexAuthenticatorRedis": "imageHash-userAuthn-dexAuthenticatorRedis",
-		"kubeconfigGenerator":   "imageHash-userAuthn-kubeconfigGenerator",
-		"selfSignedGenerator":   "imageHash-userAuthn-selfSignedGenerator",
+		"crowdBasicAuthProxy": "imageHash-userAuthn-crowdBasicAuthProxy",
+		"dex":                 "imageHash-userAuthn-dex",
+		"dexAuthenticator":    "imageHash-userAuthn-dexAuthenticator",
+		"kubeconfigGenerator": "imageHash-userAuthn-kubeconfigGenerator",
+		"selfSignedGenerator": "imageHash-userAuthn-selfSignedGenerator",
 	},
 	"userAuthz": map[string]interface{}{
 		"webhook": "imageHash-userAuthz-webhook",
