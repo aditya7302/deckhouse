@@ -11,9 +11,9 @@ require (
 	github.com/davecgh/go-spew v1.1.1
 	github.com/deckhouse/deckhouse/dhctl v0.0.0 // use non-existent version for replace
 	github.com/fatih/color v1.13.0
-	github.com/flant/addon-operator v1.2.3
+	github.com/flant/addon-operator v0.0.0-20231016070636-29be910347d1
 	github.com/flant/kube-client v0.26.1
-	github.com/flant/shell-operator v1.3.2
+	github.com/flant/shell-operator v0.0.0-20231013105726-aa38dfcd70d1
 	github.com/gammazero/deque v0.0.0-20190521012701-46e4ffb7a622
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-openapi/spec v0.19.8
@@ -220,7 +220,3 @@ replace github.com/deckhouse/deckhouse/go_lib/cloud-data => ./go_lib/cloud-data
 
 // Remove 'in body' from errors, fix for Go 1.16 (https://github.com/go-openapi/validate/pull/138).
 replace github.com/go-openapi/validate => github.com/flant/go-openapi-validate v0.19.12-flant.0
-
-replace github.com/flant/addon-operator => github.com/flant/addon-operator v0.0.0-20231012155943-ce7f5893b936
-
-replace github.com/flant/shell-operator => github.com/flant/shell-operator v0.0.0-20231012155839-6f6a32cc776f
