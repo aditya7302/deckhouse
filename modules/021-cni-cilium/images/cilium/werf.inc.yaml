@@ -24,7 +24,7 @@ shell:
   - make PKG_BUILD=1 SKIP_DOCS=true DESTDIR=/tmp/install build-container install-container-binary
   - make PKG_BUILD=1 SKIP_DOCS=true DESTDIR=/tmp/install install-bash-completion licenses-all
   - mv LICENSE.all /tmp/install/LICENSE.all
-  - cp -t /tmp/install images/cilium/init-container.sh plugins/cilium-cni/cni-install.sh plugins/cilium-cni/install-plugin.sh plugins/cilium-cni/cni-uninstall.sh
+  - cp -t /tmp/install images/cilium/init-container.sh plugins/cilium-cni/install-plugin.sh plugins/cilium-cni/cni-uninstall.sh
 ---
 image: {{ $.ModuleName }}/{{ $.ImageName }}
 fromImage: {{ $.ModuleName }}/builder-runtime-artifact
