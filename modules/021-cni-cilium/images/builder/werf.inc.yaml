@@ -41,20 +41,6 @@ import:
   add: /usr/local/bin/bpftool
   to: /usr/local/bin/bpftool
   before: install
-- artifact: {{ $.ModuleName }}/{{ $.ImageName }}-iproute2-artifact
-  add: /usr/lib
-  to: /usr/lib
-  before: install
-  includePaths:
-  - libbpf*
-- artifact: {{ $.ModuleName }}/{{ $.ImageName }}-iproute2-artifact
-  add: /usr/local/bin
-  to: /usr/local/bin
-  before: install
-  includePaths:
-  - ip
-  - tc
-  - ss
 - artifact: {{ $.ModuleName }}/{{ $.ImageName }}-gops-artifact
   add: /out/linux/amd64/bin/loopback
   to: /cni/loopback
