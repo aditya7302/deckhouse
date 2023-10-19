@@ -104,11 +104,6 @@ spec:
         - name: KUBERNETES_SERVICE_PORT
           value: "6445"
         lifecycle:
-          postStart:
-            exec:
-              command:
-              - "/cni-install.sh"
-              - "--cni-exclusive=true"
           preStop:
             exec:
               command:
