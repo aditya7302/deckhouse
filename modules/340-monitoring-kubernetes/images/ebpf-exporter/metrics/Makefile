@@ -20,7 +20,7 @@ HDR = ${wildcard *.h}
 CLANG_BPF_SYS_INCLUDES = $(shell $(CC) -v -E - </dev/null 2>&1 \
 	| sed -n '/<...> search starts here:/,/End of search list./{ s| \(/.*\)|-idirafter \1|p }')
 
-include ../Makefile.libbpf
+include ../ebpf_exporter/Makefile.libbpf
 
 $(OBJ): %.bpf.o: %.bpf.c $(HDR) ../include/$(ARCH)/vmlinux.h $(LIBBPF_DEPS)
 	$(CC) -mcpu=v3 -g -O2 -Wall -Werror -D__TARGET_ARCH_$(ARCH) $(CFLAGS) $(CLANG_BPF_SYS_INCLUDES) -I../include/$(ARCH) $(LIBBPF_CFLAGS) -c -target bpf $< -o $@
