@@ -29,7 +29,7 @@ shell:
   - CGO_LDFLAGS="-l bpf" GOPROXY={{ $.GOPROXY }} CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -o ebpf_exporter -tags netgo -v -ldflags="-extldflags "-static" -X github.com/prometheus/common/version.Version=v2.2.0 -X github.com/prometheus/common/version.Branch=HEAD -X github.com/prometheus/common/version.Revision=92f7021 -X github.com/prometheus/common/version.BuildUser=root@a080aa47fbb1 -X github.com/prometheus/common/version.BuildDate=2023-10-18T20:41:37+00:00" ./cmd/ebpf_exporter
   - chown -R 64535:64535 ebpf_exporter
   - chmod 0700 ebpf_exporter
-  - make -С /build/metrics clean build
+  - make -C /build/metrics clean build
 ---
 image: {{ .ModuleName }}/{{ .ImageName }}
 fromImage: common/distroless
