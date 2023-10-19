@@ -1,0 +1,17 @@
+kernel_version_constraints: ">= 5.3.0, < 5.5.0"
+metrics:
+  counters:
+    - name: oom_kills
+      help: Count global and cgroup level OOMs
+      perf_map: events
+      labels:
+        - name: cgroup_path
+          size: 8
+          decoders:
+            - name: uint
+            - name: cgroup
+        - name: global_oom
+          size: 1
+          decoders:
+            - name: uint
+
