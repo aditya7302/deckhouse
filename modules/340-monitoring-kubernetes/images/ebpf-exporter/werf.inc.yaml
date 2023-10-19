@@ -13,7 +13,7 @@ mount:
 shell:
   install:
   - apt-get update
-  - apt-get install -y --no-install-recommends libelf-dev
+  - apt-get install -y --no-install-recommends libelf-dev clang
   - |
     mkdir /build && \
     git clone --branch v1.2.0 --single-branch --depth 1 {{ $.SOURCE_REPO }}/libbpf/libbpf.git /build/libbpf && \
