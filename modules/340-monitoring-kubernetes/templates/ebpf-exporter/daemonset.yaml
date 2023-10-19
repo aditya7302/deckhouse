@@ -64,7 +64,7 @@ spec:
         {{- include "helm_lib_module_container_security_context_privileged" . | nindent 8 }}
         args:
         - --config.dir=/config/
-        - --config.names=programs.yaml
+        - --config.names=programs
         - --web.listen-address=127.0.0.1:9435
         volumeMounts:
         - name: config
