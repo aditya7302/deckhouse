@@ -29,7 +29,7 @@ image: {{ .ModuleName }}/{{ .ImageName }}
 fromImage: common/distroless
 import:
 - artifact: {{ .ModuleName }}/build-artifact
-  add: /build/ebpf_exporter/ebpf_exporter
+  add: /build/ebpf-exporter/ebpf_exporter
   to: /ebpf_exporter
   before: setup
 docker:
