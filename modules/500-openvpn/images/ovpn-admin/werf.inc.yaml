@@ -17,7 +17,7 @@ import:
 - artifact: {{ .ModuleName }}/ovpn-admin-src-artifact
   add: /src
   to: /src
-  before: setup
+  before: install
 shell:
   install:
     - cd /src
@@ -33,7 +33,7 @@ import:
 - artifact: {{ .ModuleName }}/ovpn-admin-src-artifact
   add: /src
   to: /src
-  before: setup
+  before: install
 shell:
   install:
     - cd /src/frontend
