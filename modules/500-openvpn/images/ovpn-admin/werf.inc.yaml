@@ -56,5 +56,3 @@ import:
   before: setup
 docker:
   ENTRYPOINT: ["/ovpn-admin"]
-  ENV: GIT_COMMIT={{ $gitCommit }}
-  ENV: LANG=C.UTF-8
