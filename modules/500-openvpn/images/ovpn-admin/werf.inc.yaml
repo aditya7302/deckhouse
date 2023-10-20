@@ -20,6 +20,7 @@ import:
   before: setup
 shell:
   install:
+    - cd /src
     - export GO_VERSION=${GOLANG_VERSION}
     - export GOPROXY={{ $.GOPROXY }}
     - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -ldflags="-s -w" -o /ovpn-admin
