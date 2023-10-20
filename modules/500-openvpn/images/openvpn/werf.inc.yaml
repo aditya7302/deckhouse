@@ -29,7 +29,7 @@ image: {{ .ModuleName }}/{{ .ImageName }}
 fromImage: common/distroless
 import:
 - artifact: {{ .ModuleName }}/openvpn-artifact
-  add: /src/src/openvpn/openvpn
+  add: /src/openvpn/src/openvpn/openvpn
   to: /openvpn
   before: setup
 docker:
