@@ -24,3 +24,13 @@ shell:
     - autoreconf -vi
     - ./configure --enable-static --disable-shared --disable-debug --disable-unit-tests --disable-lz4 --disable-plugin-auth-pam --disable-plugin-down-root
     - make LIBS="-all-static"
+---
+image: {{ .ModuleName }}/{{ .ImageName }}
+fromImage: common/distroless
+import:
+- artifact: {{ .ModuleName }}/openvpn-artifact
+  add: /src/src/openvpn/openvpn
+  to: /openvpn
+  before: setup
+docker:
+  ENTRYPOINT: ["/openvpn"]
