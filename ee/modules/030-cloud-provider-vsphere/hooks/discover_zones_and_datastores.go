@@ -84,6 +84,7 @@ func doDiscover(input *go_hook.HookInput, dc dependency.Container) error {
 	})
 
 	storageClasses := output.ZonedDataStores
+	input.LogEntry.Println("ZonedDataStores: ", storageClasses)
 
 	if exclude, ok := input.Values.GetOk("cloudProviderVsphere.storageClass.exclude"); ok {
 		var excludes []string
