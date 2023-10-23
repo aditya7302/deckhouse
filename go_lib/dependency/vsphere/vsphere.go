@@ -345,6 +345,9 @@ func getDataStoresInDC(ctx context.Context, client client, datacenter *object.Da
 			return nil, fmt.Errorf("'%s' is not a Datastore nor a DatastoreCluster", reflect.TypeOf(dsObject))
 		}
 
+		fmt.Println("inventoryPath: ", inventoryPath)
+		fmt.Println("SlugName: ", slugKubernetesName(strings.Join(strings.Split(inventoryPath, "/")[3:], "-")))
+
 		zds = append(zds, ZonedDataStore{
 			Zones:         dsZones,
 			InventoryPath: inventoryPath,
