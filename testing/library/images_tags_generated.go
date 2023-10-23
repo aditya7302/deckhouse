@@ -142,6 +142,7 @@ var DefaultImagesDigests = map[string]interface{}{
 		"pause":                     "imageHash-common-pause",
 		"shellOperator":             "imageHash-common-shellOperator",
 		"utilLinuxStatic":           "imageHash-common-utilLinuxStatic",
+		"xfsprogsStatic":            "imageHash-common-xfsprogsStatic",
 	},
 	"containerizedDataImporter": map[string]interface{}{
 		"cdiApiserver":    "imageHash-containerizedDataImporter-cdiApiserver",
