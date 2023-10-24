@@ -1,5 +1,5 @@
 diff --git a/pkg/ipam/hostscope.go b/pkg/ipam/hostscope.go
-index 6d58007461..b588f4c4bd 100644
+index 6d58007461..d5446b8df7 100644
 --- a/pkg/ipam/hostscope.go
 +++ b/pkg/ipam/hostscope.go
 @@ -5,8 +5,10 @@ package ipam
@@ -35,10 +35,11 @@ index 6d58007461..b588f4c4bd 100644
  
  	return a
  }
-@@ -53,11 +59,35 @@ func (h *hostScopeAllocator) Release(ip net.IP, pool Pool) error {
+@@ -52,12 +58,35 @@ func (h *hostScopeAllocator) Release(ip net.IP, pool Pool) error {
+ }
  
  func (h *hostScopeAllocator) AllocateNext(owner string, pool Pool) (*AllocationResult, error) {
- 	ip, err := h.allocator.AllocateNext()
+-	ip, err := h.allocator.AllocateNext()
 +	var result AllocationResult
 +	var err error
 +	if h.k8swatcher != nil {
