@@ -105,7 +105,7 @@ shell:
   - apt-get purge --auto-remove
   - apt-get clean
   - rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
-  - mkdir -p chmod +x /go/src/github.com/cilium/cilium/images/builder
+  - mkdir -p /go/src/github.com/cilium/cilium/images/builder
   - curl -sSfL https://raw.githubusercontent.com/cilium/cilium/v{{ $ciliumVersion }}/images/builder/install-protoc.sh -o /go/src/github.com/cilium/cilium/images/builder/install-protoc.sh
   - curl -sSfL https://raw.githubusercontent.com/cilium/cilium/v{{ $ciliumVersion }}/images/builder/install-protoplugins.sh -o /go/src/github.com/cilium/cilium/images/builder/install-protoplugins.sh
   - chmod +x /go/src/github.com/cilium/cilium/images/builder/*.sh
