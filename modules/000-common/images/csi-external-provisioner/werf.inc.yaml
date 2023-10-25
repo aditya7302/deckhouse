@@ -25,6 +25,8 @@ shell:
     - export GO_VERSION=${GOLANG_VERSION}
     - export GOPROXY={{ $.GOPROXY }}
     - cd /src
+    - go get -u golang.org/x/net@v0.17.0
+    - go mod vendor
     - make build
     - cp bin/csi-provisioner /csi-provisioner
     - chown 64535:64535 /csi-provisioner
