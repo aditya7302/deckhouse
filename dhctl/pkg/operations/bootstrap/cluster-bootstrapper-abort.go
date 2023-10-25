@@ -16,12 +16,11 @@ package bootstrap
 
 import (
 	"fmt"
-	"github.com/deckhouse/deckhouse/dhctl/pkg/operations/commander"
-
 	"github.com/deckhouse/deckhouse/dhctl/pkg/app"
 	"github.com/deckhouse/deckhouse/dhctl/pkg/config"
 	"github.com/deckhouse/deckhouse/dhctl/pkg/infrastructure"
 	"github.com/deckhouse/deckhouse/dhctl/pkg/log"
+	"github.com/deckhouse/deckhouse/dhctl/pkg/operations/commander"
 	"github.com/deckhouse/deckhouse/dhctl/pkg/operations/destroy"
 	"github.com/deckhouse/deckhouse/dhctl/pkg/state"
 	"github.com/deckhouse/deckhouse/dhctl/pkg/state/cache"
@@ -92,8 +91,11 @@ func (b *ClusterBootstrapper) doRunBootstrapAbort(forceAbortFromCache bool) erro
 		}
 		if !ok || forceAbortFromCache {
 			log.DebugF(fmt.Sprintf("Abort from cache. tf-state-and-manifests-in-cluster=%v; Force abort %v\n", ok, forceAbortFromCache))
+
 			terraStateLoader := terrastate.NewFileTerraStateLoader(stateCache, metaConfig)
-			destroyer = infrastructure.NewClusterInfra(terraStateLoader, stateCache)
+			destroyer = infrastructure.NewClusterInfraWithOptions(terraStateLoader, stateCache, infrastructure.ClusterInfraOptions{
+				PhasedExecutionContext: b.PhasedExecutionContext,
+			})
 
 			logMsg := "Deckhouse installation was not started before. Abort from cache"
 			if forceAbortFromCache {
@@ -141,10 +143,10 @@ func (b *ClusterBootstrapper) doRunBootstrapAbort(forceAbortFromCache bool) erro
 		}
 
 		destroyParams := &destroy.Params{
-			SSHClient:     sshClient,
-			StateCache:    cache.Global(),
-			OnPhaseFunc:   b.OnPhaseFunc,
-			SkipResources: app.SkipResources,
+			SSHClient:              sshClient,
+			StateCache:             cache.Global(),
+			PhasedExecutionContext: b.PhasedExecutionContext,
+			SkipResources:          app.SkipResources,
 		}
 
 		if b.CommanderMode {
@@ -177,9 +179,20 @@ func (b *ClusterBootstrapper) doRunBootstrapAbort(forceAbortFromCache bool) erro
 		return fmt.Errorf("Destroyer not initialized")
 	}
 
-	if err := destroyer.DestroyCluster(app.SanityCheck); err != nil {
+	if err := b.PhasedExecutionContext.InitPipeline(stateCache); err != nil {
 		return err
 	}
+	defer b.PhasedExecutionContext.Finalize(stateCache)
+
+	if err := destroyer.DestroyCluster(app.SanityCheck); err != nil {
+		b.lastState = b.PhasedExecutionContext.GetLastState()
+		return err
+	}
+	if err := b.PhasedExecutionContext.CompletePipeline(stateCache); err != nil {
+		b.lastState = b.PhasedExecutionContext.GetLastState()
+		return err
+	}
+	b.lastState = b.PhasedExecutionContext.GetLastState()
 
 	stateCache.Clean()
 	// Allow to reuse cache because cluster will be bootstrapped again (probably)
