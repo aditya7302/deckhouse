@@ -80,15 +80,14 @@ index f7ef6cd257..d171474074 100644
  		GSOMaxSize:                  int64(d.bigTCPConfig.GetGSOIPv6MaxSize()),
  		GROIPV4MaxSize:              int64(d.bigTCPConfig.GetGROIPv4MaxSize()),
 diff --git a/pkg/datapath/connector/veth.go b/pkg/datapath/connector/veth.go
-index 7edac7e95b..c2924776a5 100644
+index 7edac7e95b..94a57d21b5 100644
 --- a/pkg/datapath/connector/veth.go
 +++ b/pkg/datapath/connector/veth.go
-@@ -62,11 +62,21 @@ func SetupVethWithNames(lxcIfName, tmpIfName string, mtu, groIPv6MaxSize, gsoIPv
+@@ -62,11 +62,19 @@ func SetupVethWithNames(lxcIfName, tmpIfName string, mtu, groIPv6MaxSize, gsoIPv
  	// explicitly setting MAC addrs for both veth ends. This sets
  	// addr_assign_type for NET_ADDR_SET which prevents systemd from changing
  	// the addrs.
 -	epHostMAC, err = mac.GenerateRandMAC()
-+	fmt.Println("ep.HostMac", ep.HostMac)
 +	if ep.HostMac != "" {
 +		epHostMAC, err = mac.ParseMAC(ep.HostMac)
 +	} else {
@@ -98,7 +97,6 @@ index 7edac7e95b..c2924776a5 100644
  		return nil, nil, fmt.Errorf("unable to generate rnd mac addr: %s", err)
  	}
 -	epLXCMAC, err = mac.GenerateRandMAC()
-+	fmt.Println("ep.Mac", ep.Mac)
 +	if ep.Mac != "" {
 +		epLXCMAC, _ = mac.ParseMAC(ep.Mac)
 +	} else {
@@ -125,7 +123,7 @@ index 1258c1af89..400058a1b1 100644
  	// It is disabled by default for backwards compatibility.
  	EnableEndpointRoutes = false
 diff --git a/pkg/option/config.go b/pkg/option/config.go
-index b3ffe32d05..bee6935212 100644
+index b3ffe32d05..0f4c854a2e 100644
 --- a/pkg/option/config.go
 +++ b/pkg/option/config.go
 @@ -1039,6 +1039,12 @@ const (
@@ -163,13 +161,12 @@ index b3ffe32d05..bee6935212 100644
  		EnableEndpointRoutes:         defaults.EnableEndpointRoutes,
  		AnnotateK8sNode:              defaults.AnnotateK8sNode,
  		K8sServiceCacheSize:          defaults.K8sServiceCacheSize,
-@@ -2999,6 +3013,9 @@ func (c *DaemonConfig) Populate(vp *viper.Viper) {
+@@ -2999,6 +3013,8 @@ func (c *DaemonConfig) Populate(vp *viper.Viper) {
  	c.L2AnnouncerRetryPeriod = vp.GetDuration(L2AnnouncerRetryPeriod)
  	c.EnableWireguardUserspaceFallback = vp.GetBool(EnableWireguardUserspaceFallback)
  	c.EnableWellKnownIdentities = vp.GetBool(EnableWellKnownIdentities)
-+	c.EndpointInterfaceHostMAC = viper.GetString(EndpointInterfaceHostMAC)
-+	c.EndpointInterfaceMAC = viper.GetString(EndpointInterfaceMAC)
-+	fmt.Println("viper.GetString(EndpointInterfaceMAC)", viper.GetString(EndpointInterfaceMAC))
++	c.EndpointInterfaceHostMAC = vp.GetString(EndpointInterfaceHostMAC)
++	c.EndpointInterfaceMAC = vp.GetString(EndpointInterfaceMAC)
  	c.EnableXDPPrefilter = vp.GetBool(EnableXDPPrefilter)
  	c.DisableCiliumEndpointCRD = vp.GetBool(DisableCiliumEndpointCRDName)
  	c.EgressMasqueradeInterfaces = vp.GetString(EgressMasqueradeInterfaces)
