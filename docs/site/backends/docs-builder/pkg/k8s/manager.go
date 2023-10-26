@@ -29,7 +29,7 @@ import (
 )
 
 const (
-	ns    = "d8-system"
+	ns    = "deckhouse-web-test" //TODO: fix it
 	name  = "docs-sync"
 	label = "deckhouse.io/documentation-builder-sync"
 
