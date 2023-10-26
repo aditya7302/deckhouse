@@ -26,6 +26,6 @@ subjects:
     name: doc-builder
     namespace: deckhouse-web-test
 roleRef:
-  kind: ClusterRole
+  kind: Role
   name: leases-edit
   apiGroup: rbac.authorization.k8s.io
