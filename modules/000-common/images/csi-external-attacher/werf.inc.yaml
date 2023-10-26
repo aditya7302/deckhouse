@@ -27,24 +27,15 @@ shell:
     - cd /src
     {{- if semverCompare "<=1.26" $version }}
     - go get -u golang.org/x/net@v0.17.0
-    - go get k8s.io/client-go/tools/clientcmd@v0.26.1
-    - go get k8s.io/component-base/metrics@v0.26.0
-    - go get google.golang.org/grpc/internal/channelz@v1.52.3
-    - go get golang.org/x/net/idna@v0.17.0
+    - go get -u google.golang.org/grpc@v1.56.3
     - go mod vendor
     {{- else if semverCompare "=1.27" $version }}
     - go get -u golang.org/x/net@v0.17.0
-    - go get k8s.io/client-go/tools/clientcmd@v0.27.1
-    - go get k8s.io/component-base/metrics@v0.26.0
-    - go get google.golang.org/grpc/internal/channelz@v1.54.0
-    - go get golang.org/x/net/idna@v0.17.0
+    - go get -u google.golang.org/grpc@v1.56.3
     - go mod vendor
     {{- else if semverCompare "=1.28" $version }}
     - go get -u golang.org/x/net@v0.17.0
-    - go get k8s.io/client-go/tools/clientcmd@v0.28.1
-    - go get k8s.io/component-base/metrics@v0.28.0
-    - go get google.golang.org/grpc/internal/channelz@v1.57.0
-    - go get golang.org/x/net/idna@v0.17.0
+    - go get -u google.golang.org/grpc@v1.56.3
     - go mod vendor
     {{- end }}
     - make build
