@@ -12,6 +12,9 @@ import:
     includePaths:
       - csi-snapshotter
     before: setup
+shell:
+  setup:
+    - echo AAAAA
 docker:
   ENTRYPOINT: ["/csi-snapshotter"]
 ---
