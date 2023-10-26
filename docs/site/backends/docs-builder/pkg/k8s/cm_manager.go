@@ -65,8 +65,8 @@ func (m *ConfigmapManager) Create(ctx context.Context) error {
 		Data: map[string]string{
 			"address": fmt.Sprintf(
 				"%s.%s.pod.cluster.local",
-				strings.ReplaceAll(os.Getenv(""), ".", "-"), //TODO: container ip
-				os.Getenv(""), // TODO: namespace name
+				strings.ReplaceAll(os.Getenv("POD_IP"), ".", "-"),
+				os.Getenv("POD_NAMESPACE"),
 			),
 		},
 	}
