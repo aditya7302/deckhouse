@@ -1,0 +1,90 @@
+admission-policy-engine:
+  features:
+    - summary: Add java vulnerability scan capability to trivy-provider.
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6139
+      impact: trivy-provider will restar.
+candi:
+  fixes:
+    - summary: fix big time drift on nodes
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6297
+      impact: all chrony pods should be restarted
+chrony:
+  features:
+    - summary: Chrony image is based on distroless.
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6240
+common:
+  fixes:
+    - summary: fix cve issues in kube-rbac-proxy image
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6316
+      impact: check the pods that are behind the kube-rbac-proxy
+deckhouse:
+  features:
+    - summary: Change deckhouse-controller user to deckhouse
+      pull_request: https://github.com/deckhouse/deckhouse/pull/5841
+dhctl:
+  features:
+    - summary: >-
+        Implemented copying of Deckhouse images to third-party registries for air-gapped
+        installation.
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6257
+external-module-manager:
+  features:
+    - summary: Add support for module pull from insecure (http) registry.
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6340
+  fixes:
+    - summary: add support for hardlinks and symlinks to the module
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6330
+go_lib:
+  fixes:
+    - summary: Fix EnsureCRDs hook - reading an empty yaml document should't trigger an error.
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6326
+ingress-nginx:
+  features:
+    - summary: Add v1.9.3 Ingress Nginx controller version.
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6312
+      impact: >-
+        In case of switching to '1.9' controller version, relevant Ingress nginx's pods will be
+        recreated.
+  fixes:
+    - summary: fix cve issues in protobuf-exporter image
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6327
+    - summary: fix cve issues in nginx-exporter image
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6325
+    - summary: fix cve issues in kruise image
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6320
+local-path-provisioner:
+  features:
+    - summary: Move to distroless
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6194
+monitoring-ping:
+  features:
+    - summary: Switch monitoring-ping to use distroless image and static build a python
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6204
+multitenancy-manager:
+  fixes:
+    - summary: Applying a non-valid project or projectType should not stop the main task flow.
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6049
+pod-reloader:
+  fixes:
+    - summary: added the forgotten node selector
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6338
+prometheus:
+  features:
+    - summary: Ability to set custom logo for the Grafana dashboard
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6268
+  fixes:
+    - summary: Fixed HIGH CVE issues in alertmanager image
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6294
+      impact: Check that the alerts come after the update
+    - summary: Fixed HIGH CVE issues in trickster image
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6281
+      impact: Check that the prometheus metrics come after the update
+testing:
+  features:
+    - summary: Add validation test for wrong property names.
+      pull_request: https://github.com/deckhouse/deckhouse/pull/5853
+user-authn:
+  features:
+    - summary: Ability to set custom logo for the Dex login page
+      pull_request: https://github.com/deckhouse/deckhouse/pull/6268
+
