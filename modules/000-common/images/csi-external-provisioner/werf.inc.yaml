@@ -27,6 +27,7 @@ shell:
     - cd /src
     - go get -u golang.org/x/net@v0.17.0
     - go get -u google.golang.org/grpc@v1.56.3
+    - go mod tidy
     - go mod vendor
     - make build
     - cp bin/csi-provisioner /csi-provisioner
