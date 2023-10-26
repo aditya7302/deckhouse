@@ -27,6 +27,7 @@ import (
 
 	"github.com/flant/docs_builder/pkg/k8s"
 
+	"golang.org/x/sync/errgroup"
 	"k8s.io/klog/v2"
 )
 
@@ -49,15 +50,15 @@ func main() {
 	ctx, stopNotify := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 	defer stopNotify()
 
-	cmManager, err := k8s.NewConfigmapManager()
+	lManager, err := k8s.NewLeasesManager()
 	if err != nil {
-		klog.Fatalf("new cm manager: %s", err)
+		klog.Fatalf("new leases manager: %s", err)
 	}
 
 	r := mux.NewRouter()
 	r.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) { _, _ = w.Write([]byte("ok")) })
 	r.Handle("/loadDocArchive/{moduleName}/{version}", newLoadHandler(src)).Methods(http.MethodPost)
-	r.Handle("/build", newBuildHandler(src, dst, cmManager)).Methods(http.MethodPost)
+	r.Handle("/build", newBuildHandler(src, dst)).Methods(http.MethodPost)
 
 	srv := &http.Server{
 		Addr:    listenAddress,
@@ -69,20 +70,30 @@ func main() {
 			klog.Fatalf("listen: %s", err)
 		}
 	}()
-	klog.Info("Server Started")
+	klog.Info("Server started")
 
-	err = cmManager.Create(ctx)
-	if err != nil {
-		klog.Fatalf("create sync config map: %s", err)
+	if err := lManager.Create(ctx); err != nil {
+		klog.Fatalf("create leases: %v", err)
 	}
 
+	go func() {
+		err = lManager.Run(ctx)
+		if err != nil {
+			klog.Fatalf("", err)
+		}
+	}()
+
 	<-ctx.Done()
-	klog.Info("Server Stopped")
+	klog.Info("Server stopped")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
+	var wg errgroup.Group
 
-	if err := srv.Shutdown(ctx); err != nil {
-		klog.Fatalf("Server Shutdown Failed:%+v", err)
+	wg.Go(lManager.Remove)
+	wg.Go(func() error { return srv.Shutdown(ctx) })
+
+	if err := wg.Wait(); err != nil {
+		klog.Fatalf("Shutdown failed: %v", err)
 	}
 }

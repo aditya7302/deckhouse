@@ -19,23 +19,19 @@ import (
 	"net/http"
 
 	"github.com/flant/docs_builder/pkg/hugo"
-	"github.com/flant/docs_builder/pkg/k8s"
-
 	"k8s.io/klog/v2"
 )
 
-func newBuildHandler(src string, dst string, cmManager *k8s.ConfigmapManager) *buildHandler {
+func newBuildHandler(src string, dst string) *buildHandler {
 	return &buildHandler{
-		src:       src,
-		dst:       dst,
-		cmManager: cmManager,
+		src: src,
+		dst: dst,
 	}
 }
 
 type buildHandler struct {
-	src       string
-	dst       string
-	cmManager *k8s.ConfigmapManager
+	src string
+	dst string
 }
 
 func (b *buildHandler) ServeHTTP(writer http.ResponseWriter, request *http.Request) {
@@ -60,9 +56,5 @@ func (b *buildHandler) build() error {
 		return fmt.Errorf("hugo build: %w", err)
 	}
 
-	err = b.cmManager.Remove()
-	if err != nil {
-		return fmt.Errorf("remove cm: %w", err)
-	}
 	return nil
 }
