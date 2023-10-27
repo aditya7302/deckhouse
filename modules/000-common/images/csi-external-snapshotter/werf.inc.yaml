@@ -12,12 +12,6 @@ import:
     includePaths:
       - csi-snapshotter
     before: setup
-  - artifact: {{ $.ModuleName }}/{{ $.ImageName }}-artifact-{{ $version | replace "." "-" }}
-    add: /test
-    to: /test
-    includePaths:
-      - test
-    before: setup
 docker:
   ENTRYPOINT: ["/csi-snapshotter"]
 ---
@@ -39,6 +33,5 @@ shell:
     - cp bin/csi-snapshotter /csi-snapshotter
     - chown 64535:64535 /csi-snapshotter
     - chmod 0755 /csi-snapshotter
-    - echo "1234" > /test
   {{- end }}
 {{- end }}
